@@ -3,6 +3,7 @@ package com.example.image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +41,9 @@ fun HomeScreen(
     var height by remember {
         mutableStateOf(0)
     }
+    var error by remember {
+        mutableStateOf("")
+    }
     Box(modifier = Modifier.fillMaxSize()){
         MyTopAppBar()
         Box(
@@ -48,7 +53,9 @@ fun HomeScreen(
         ) {
 
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Enter your image, width, height", fontSize = 18.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().padding(6.dp))
+                Text("Enter your image, width, height", fontSize = 18.sp, textAlign = TextAlign.Center, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(6.dp))
                 TextField(
 
                     value = search,
@@ -74,12 +81,34 @@ fun HomeScreen(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Done),
                 )
+                Text(text = error, color = Color.Red)
                 Button(onClick = {
-                    navController.navigate(Screen.Image.route)
+                    if(search.isBlank() or search.isEmpty()) {
+                        error = "search can not be empty"
+                    }
+                    if(width == 0) {
+                        error = "width can not be 0"
+                    }
+                    if(height == 0) {
+                        error = "width can not be 0"
+                    }
+                    else {
+                        navController.navigate("image_screen/$width/$height/$search")
+                    }
                 }) {
                     Text(text = "Go!")
                 }
-
+                Row() {
+                    Button(onClick = { search = "fish" },modifier = Modifier.padding(6.dp)) {
+                        Text(text = "fish")
+                    }
+                    Button(onClick = { search = "dog" },modifier = Modifier.padding(6.dp)) {
+                        Text(text = "dog")
+                    }
+                    Button(onClick = { search = "cat" },modifier = Modifier.padding(6.dp)) {
+                        Text(text = "cat")
+                    }
+                }
             }
         }
     }

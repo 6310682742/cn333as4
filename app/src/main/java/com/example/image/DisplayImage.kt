@@ -19,7 +19,7 @@ fun DisplayImage(src: String, modifier: Modifier = Modifier) {
             .crossfade(true)
             .build(),
         contentDescription = "",
-        contentScale = ContentScale.Crop,
+
         modifier = Modifier
             .size(200.dp)
     )
