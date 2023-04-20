@@ -2,6 +2,7 @@ package com.example.image
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,22 +15,28 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun ImageScreen(
-    navController:NavHostController
+    navController:NavHostController,
+    search:String = "dog",
+    width:Int = 150,
+    height:Int = 150
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        Column() {
+            DisplayImage(src = "https://loremflickr.com/$width/$height/$search")
+            Text(
+                modifier = Modifier.clickable {
+                    navController.popBackStack()
+                },
+                text = "$width",
+                color = Color.Gray,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
-        Text(
-            modifier = Modifier.clickable {
-                navController.popBackStack()
-            },
-            text = "Image",
-            color = Color.Gray,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
     }
 }

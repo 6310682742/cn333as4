@@ -21,7 +21,6 @@ fun DisplayImage(src: String, modifier: Modifier = Modifier) {
         contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .clip(CircleShape)
             .size(200.dp)
     )
 }
